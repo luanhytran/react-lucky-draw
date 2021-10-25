@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import ReactPlayer from "react-player";
 import Wheel from "./components/Wheel";
 import ItemForm from "./components/ItemForm";
@@ -10,370 +10,329 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css";
 import MusicPlayer from "./components/MusicPlayer/MusicPlayer";
 
-export class App extends React.Component {
-  constructor(props) {
-    super(props);
+function App() {
+  const [spinning, setSpinning] = useState(false);
 
-    this.state = {
-      // items:
-      //   JSON.parse(localStorage.getItem("itemsList")) == null
-      //     ? localStorage.setItem(
-      //         "itemsList",
-      //         JSON.stringify([
-      //           "Ali",
-      //           "Beatriz",
-      //           "Charles",
-      //           "Diya",
-      //           "Eric",
-      //           "Fatima",
-      //           "Gabriel",
-      //           "Hanna",
-      //         ])
-      //       )
-      //     : JSON.parse(localStorage.getItem("itemsList")),
-      items: [
-        "Ali",
-        "Beatriz",
-        "Charles",
-        "Diya",
-        "Eric",
-        "Fatima",
-        "Gabriel",
-        "Hanna",
-      ],
-      spinning: false,
-      text: "",
-      winners: [],
-      selected: "Entries",
-      openModal: false,
-      wheelColor: `${localStorage.getItem("wheelColor")}`,
-      fontColor: `${localStorage.getItem("fontColor")}`,
-      marks: [
-        {
-          value: 10,
-          label: "10",
-        },
-        {
-          value: 20,
-          label: "20",
-        },
-        {
-          value: 30,
-          label: "30",
-        },
-        {
-          value: 40,
-          label: "40",
-        },
-        {
-          value: 50,
-          label: "50",
-        },
-        {
-          value: 60,
-          label: "60",
-        },
-      ],
-      // url:
-      //   localStorage.getItem("urlYoutube") == null
-      //     ? localStorage.setItem(
-      //         "urlYoutube",
+  const [text, setText] = useState("");
 
-      //         "https://www.youtube.com/watch?v=40vHCH6l2lM"
-      //       )
-      //     : localStorage.getItem("urlYoutube"),
-      url: "https://www.youtube.com/watch?v=40vHCH6l2lM",
-      controls: true,
-      loop: true,
-    };
+  const [winners, setWinners] = useState([]);
+
+  const [selected, setSelected] = useState("Entries");
+
+  const [openModal, setOpenModal] = useState(false);
+
+  // player for youtube url
+  const [player, setPlayer] = useState();
+
+  const [urlInput, setUrlInput] = useState();
+
+  const [items, setItems] = useState(() => {
+    const value = window.localStorage.getItem("itemsList");
+    return value !== null
+      ? JSON.parse(value)
+      : [
+          "Ali",
+          "Beatriz",
+          "Charles",
+          "Diya",
+          "Eric",
+          "Fatima",
+          "Gabriel",
+          "Hanna",
+        ];
+  });
+
+  const [marks, setMarks] = useState([
+    {
+      value: 10,
+      label: "10",
+    },
+    {
+      value: 20,
+      label: "20",
+    },
+    {
+      value: 30,
+      label: "30",
+    },
+    {
+      value: 40,
+      label: "40",
+    },
+    {
+      value: 50,
+      label: "50",
+    },
+    {
+      value: 60,
+      label: "60",
+    },
+  ]);
+
+  const [duration, setDuration] = useState(() => {
+    const value = window.localStorage.getItem("duration");
+    return value !== null ? value : 10;
+  });
+
+  const [wheelColor, setWheelColor] = useState(() => {
+    const value = window.localStorage.getItem("wheelColor");
+    return value !== null ? `${value}` : "#d38c12";
+  });
+
+  const [fontColor, setFontColor] = useState(() => {
+    const value = window.localStorage.getItem("fontColor");
+    return value !== null ? `${value}` : "#FFFFF";
+  });
+
+  const [url, setUrl] = useState(() => {
+    const value = window.localStorage.getItem("urlYoutube");
+    return value !== null
+      ? `${value}`
+      : "https://www.youtube.com/watch?v=40vHCH6l2lM";
+  });
+
+  const [controls, setControls] = useState(true);
+
+  const [loop, setLoop] = useState(true);
+
+  function load(url) {
+    setUrl(url);
   }
 
-  load = (url) => {
-    this.setState({
-      url,
-    });
-  };
+  function handleToggleLoop() {
+    setLoop(!loop);
+  }
 
-  handleToggleLoop = () => {
-    this.setState({ loop: !this.state.loop });
-  };
+  function ref(player) {
+    setPlayer(player);
+  }
 
-  ref = (player) => {
-    this.player = player;
-  };
+  function changeWheelAndFontColor(color) {
+    setWheelColor(color.wheelColor);
+    setFontColor(color.fontColor);
+  }
 
-  changeWheelAndFontColor = (color) => {
-    this.setState({ wheelColor: color.wheelColor, fontColor: color.fontColor });
-  };
+  function cancelModal() {
+    setOpenModal(false);
+  }
 
-  cancelModal = () => {
-    this.setState({ openModal: false });
-  };
-
-  removeWinnerModal = () => {
-    const winner = this.state.winners[this.state.winners.length - 1];
-    const index = this.state.items.indexOf(winner);
-    this.state.items.splice(index, 1);
-    this.setState(
-      (prevState) => ({
-        items: prevState.items,
-        openModal: false,
-      }),
-      () => {
-        console.log(`Removed ${winner} from entries.`);
-      }
-    );
-
-    localStorage.setItem("itemsList", JSON.stringify(this.state.items));
-  };
-
-  addData = (val) => {
+  function addData(val) {
     localStorage.setItem("itemsList", JSON.stringify(val));
-    this.setState({ items: JSON.parse(localStorage.getItem("itemsList")) });
-  };
+    setItems(JSON.parse(window.localStorage.getItem("itemsList")));
+  }
 
   // use arrow function so we don't have to .bind(this) in constructor
-  selectResultEventHandler = (data) => {
-    if (this.state.items.length > 0 && this.state.spinning !== true) {
+  function clearListEventHandler() {
+    setWinners([]);
+  }
+
+  function removeWinnerModal() {
+    const winner = winners[winners.length - 1];
+    const index = items.indexOf(winner);
+    items.splice(index, 1);
+    setItems(items);
+    setOpenModal(false);
+    console.log(`Removed ${winner} from entries.`);
+    localStorage.setItem("itemsList", JSON.stringify(items));
+  }
+
+  function selectResultEventHandler(data) {
+    if (items.length > 0 && spinning !== true) {
       var selectedIndex = data;
 
       // set this state to disable tab and wheel click when spinning
-      this.setState({ spinning: true });
+      setSpinning(true);
 
       // Disable function of Entries tab
-      if (this.state.selected === "Entries") {
+      if (selected === "Entries") {
         // when spinning disable update player
         document.getElementById("inputTextArea").disabled = true;
         document.getElementById("updateButton").disabled = true;
 
         // after done spinning enable update player
         setTimeout(() => {
-          this.setState({ spinning: false });
+          setSpinning(false);
           document.getElementById("inputTextArea").disabled = false;
           document.getElementById("updateButton").disabled = false;
-        }, localStorage.getItem("duration") * 1000);
+        }, window.localStorage.getItem("duration") * 1000);
       } else {
         // Disable function of Result tab
         // when spinning disable clear list
         document.getElementById("clearListButton").disabled = true;
 
         setTimeout(() => {
-          this.setState({ spinning: false });
+          setSpinning(false);
           document.getElementById("clearListButton").disabled = false;
-        }, localStorage.getItem("duration") * 1000);
+        }, window.localStorage.getItem("duration") * 1000);
       }
 
       setTimeout(() => {
-        this.setState((state) => ({
-          winners: state.winners.concat(this.state.items[selectedIndex]),
-        }));
-      }, localStorage.getItem("duration") * 1000);
+        setWinners(winners.concat(items[selectedIndex]));
+      }, window.localStorage.getItem("duration") * 1000);
 
       setTimeout(() => {
-        this.setState({ openModal: true });
-      }, localStorage.getItem("duration") * 1000);
+        setOpenModal(true);
+      }, window.localStorage.getItem("duration") * 1000);
     }
-  };
-
-  // use arrow function so we don't have to .bind(this) in constructor
-  clearListEventHandler = () => {
-    this.setState({
-      winners: [],
-    });
-  };
-
-  render() {
-    const { url, playing, controls, loop } = this.state;
-    // set spin duration to local storage, when custom duration will update local storage
-    if (localStorage.getItem("duration") === null)
-      localStorage.setItem("duration", 10);
-
-    if (localStorage.getItem("wheelColor") === null)
-      localStorage.setItem("wheelColor", "#d38c12");
-
-    if (localStorage.getItem("fontColor") === null)
-      localStorage.setItem("fontColor", "#FFFFFF");
-
-    let newWinnerIndex = this.state.winners.length - 1;
-
-    return (
-      <div>
-        <NavigationBar onChange={this.changeWheelAndFontColor} />
-        <Modal show={this.state.openModal} onHide={this.cancelModal} size="lg">
-          <Modal.Header closeButton>
-            <Modal.Title>We have a winner 🎉</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>{this.state.winners[newWinnerIndex]}</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.cancelModal}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={this.removeWinnerModal}>
-              Remove
-            </Button>
-          </Modal.Footer>
-        </Modal>
-        <Container fluid>
-          <Row>
-            <Col className="mt-4" lg="6" md="auto">
-              <Wheel
-                items={this.state.items}
-                onChange={this.selectResultEventHandler}
-                spinning={this.state.spinning}
-                wheelColor={this.state.wheelColor}
-                fontColor={this.state.fontColor}
-              />
-            </Col>
-            <Col lg="3" md="auto">
-              <div id="Tabs" className="mt-4">
-                <Tabs
-                  defaultActiveKey="entries"
-                  id="uncontrolled-tab-example"
-                  className="mb-3"
-                >
-                  <Tab eventKey="entries" title="Entries">
-                    <ItemForm
-                      items={this.state.items}
-                      winners={this.state.winners}
-                      onDeleteByIndex={this.onDeleteByIndex}
-                      onClick={(value) => this.addData(value)}
-                      // pass this key to fix bug when remove winner, textarea won't update
-                      // read more: https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
-                      key={this.state.items}
-                    />
-                  </Tab>
-                  <Tab eventKey="results" title="Results">
-                    <Result
-                      onChange={this.clearListEventHandler}
-                      winners={this.state.winners}
-                    />
-                  </Tab>
-                </Tabs>
-              </div>
-            </Col>
-            <Col
-              className="mt-4"
-              xxl={{ span: 3, order: "first" }}
-              xl={{ span: 3, order: "first" }}
-              lg={{ span: 3, order: "first" }}
-              md={{ order: "last" }}
-            >
-              <section id="youtubeSection" className="section">
-                <h2>Youtube url player</h2>
-                <ReactPlayer
-                  ref={this.ref}
-                  className="react-player"
-                  width="100%"
-                  height="100%"
-                  url={url}
-                  playing={playing}
-                  controls={controls}
-                  light={false}
-                  loop={loop}
-                  volume={null}
-                  muted={false}
-                  onReady={() => console.log("onReady")}
-                  onStart={() => console.log("onStart")}
-                  onPlay={this.handlePlay}
-                  onEnablePIP={this.handleEnablePIP}
-                  onDisablePIP={this.handleDisablePIP}
-                  onPause={this.handlePause}
-                  onBuffer={() => console.log("onBuffer")}
-                  onSeek={(e) => console.log("onSeek", e)}
-                  onEnded={this.handleEnded}
-                  onError={(e) => console.log("onError", e)}
-                  onProgress={this.handleProgress}
-                  onDuration={this.handleDuration}
-                />
-                <table style={{ width: "100%", marginTop: "10px" }}>
-                  <tbody>
-                    <tr>
-                      <th>
-                        <label htmlFor="loop">Loop</label>
-                      </th>
-                      <td>
-                        <input
-                          id="loop"
-                          type="checkbox"
-                          checked={loop}
-                          onChange={this.handleToggleLoop}
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Video URL</th>
-                      <td>
-                        {/* <InputGroup className="">
-                          <FormControl
-                            placeholder="Enter URL"
-                            ref={(input) => {
-                              this.urlInput = input;
-                            }}
-                            type="text"
-                          />
-                          <Button
-                            variant="outline-secondary"
-                            id="button-addon2"
-                            onClick={() => {
-                              localStorage.setItem(
-                                "urlYoutube",
-                                this.urlInput.value
-                              );
-                              this.setState({
-                                url: `${localStorage.getItem("urlYoutube")}`,
-                              });
-                            }}
-                          >
-                            Load
-                          </Button>
-                        </InputGroup> */}
-                        <div class="input-group mb-3">
-                          <input
-                            ref={(input) => {
-                              this.urlInput = input;
-                            }}
-                            type="text"
-                            class="form-control"
-                            placeholder="Enter URL"
-                          />
-                          <Button
-                            class="btn btn-outline-secondary"
-                            type="button"
-                            id="button-addon2"
-                            onClick={() => {
-                              localStorage.setItem(
-                                "urlYoutube",
-                                this.urlInput.value
-                              );
-                              this.setState({
-                                url: `${localStorage.getItem("urlYoutube")}`,
-                              });
-                            }}
-                          >
-                            Load
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <table style={{ marginTop: "10px" }}>
-                  <tbody>
-                    <h2>Music player</h2>
-                    <tr>
-                      <td>
-                        <MusicPlayer />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </section>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    );
   }
+
+  // set spin duration to local storage, when custom duration will update local storage
+  if (window.localStorage.getItem("duration") === null)
+    localStorage.setItem("duration", 10);
+
+  if (window.localStorage.getItem("wheelColor") === null)
+    localStorage.setItem("wheelColor", "#d38c12");
+
+  if (window.localStorage.getItem("fontColor") === null)
+    localStorage.setItem("fontColor", "#FFFFFF");
+
+  let newWinnerIndex = winners.length - 1;
+
+  return (
+    <div>
+      <NavigationBar onChange={changeWheelAndFontColor} />
+      <Modal show={openModal} onHide={cancelModal} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>We have a winner 🎉</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{winners[newWinnerIndex]}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={cancelModal}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={removeWinnerModal}>
+            Remove
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Container fluid>
+        <Row>
+          <Col className="mt-4" lg="6" md="auto">
+            <Wheel
+              items={items}
+              onChange={selectResultEventHandler}
+              spinning={spinning}
+              wheelColor={wheelColor}
+              fontColor={fontColor}
+            />
+          </Col>
+          <Col lg="3" md="auto">
+            <div id="Tabs" className="mt-4">
+              <Tabs
+                defaultActiveKey="entries"
+                id="uncontrolled-tab-example"
+                className="mb-3"
+              >
+                <Tab eventKey="entries" title="Entries">
+                  <ItemForm
+                    items={items}
+                    winners={winners}
+                    onClick={(value) => addData(value)}
+                    // pass this key to fix bug when remove winner, textarea won't update
+                    // read more: https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
+                    key={items}
+                  />
+                </Tab>
+                <Tab eventKey="results" title="Results">
+                  <Result onChange={clearListEventHandler} winners={winners} />
+                </Tab>
+              </Tabs>
+            </div>
+          </Col>
+          <Col
+            className="mt-4"
+            xxl={{ span: 3, order: "first" }}
+            xl={{ span: 3, order: "first" }}
+            lg={{ span: 3, order: "first" }}
+            md={{ order: "last" }}
+          >
+            <section id="youtubeSection" className="section">
+              <h2>Youtube url player</h2>
+              <ReactPlayer
+                ref={ref}
+                className="react-player"
+                width="100%"
+                height="100%"
+                url={url}
+                playing={false}
+                controls={controls}
+                light={false}
+                loop={loop}
+                volume={null}
+                muted={false}
+                onReady={() => console.log("onReady")}
+                onStart={() => console.log("onStart")}
+                onBuffer={() => console.log("onBuffer")}
+                onSeek={(e) => console.log("onSeek", e)}
+                onError={(e) => console.log("onError", e)}
+              />
+              <table style={{ width: "100%", marginTop: "10px" }}>
+                <tbody>
+                  <tr>
+                    <th>
+                      <label htmlFor="loop">Loop</label>
+                    </th>
+                    <td>
+                      <input
+                        id="loop"
+                        type="checkbox"
+                        checked={loop}
+                        onChange={handleToggleLoop}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Video URL</th>
+                    <td>
+                      <div class="input-group mb-3">
+                        <input
+                          ref={(input) => {
+                            setUrlInput(input);
+                          }}
+                          type="text"
+                          class="form-control"
+                          placeholder="Enter URL"
+                        />
+                        <Button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          id="button-addon2"
+                          onClick={() => {
+                            localStorage.setItem(
+                              "urlYoutube",
+                              urlInput.value
+                            );
+                            setUrl(window.localStorage.getItem("urlYoutube"));
+                            // this.setState({
+                            //   url: `${localStorage.getItem("urlYoutube")}`,
+                            // });
+                          }}
+                        >
+                          Load
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table style={{ marginTop: "10px" }}>
+                <tbody>
+                  <h2>Music player</h2>
+                  <tr>
+                    <td>
+                      <MusicPlayer />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  );
 }
+
+export default App;
