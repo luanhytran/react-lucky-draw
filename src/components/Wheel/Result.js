@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 export default class Result extends React.Component {
   clearList = () => {
@@ -28,11 +27,3 @@ export default class Result extends React.Component {
     );
   }
 }
-
-// Define prop types
-Result.propTypes = { winners: PropTypes.array };
-
-// Define default prop values
-Result.defaultProps = {
-  winners: [],
-};

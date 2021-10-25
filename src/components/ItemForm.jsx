@@ -51,6 +51,7 @@ function ItemForm(props) {
      "
       >
         <Button
+          id="shuffleButton"
           className="
           flex-lg-grow-1 
           me-lg-2
@@ -65,6 +66,7 @@ function ItemForm(props) {
           <i className="bi bi-shuffle me-3"></i>Shuffle
         </Button>
         <Button
+          id="removeButton"
           className="flex-lg-grow-1"
           variant="light"
           onClick={RemoveDuplicate}

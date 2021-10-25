@@ -13,11 +13,7 @@ import MusicPlayer from "./components/MusicPlayer/MusicPlayer";
 function App() {
   const [spinning, setSpinning] = useState(false);
 
-  const [text, setText] = useState("");
-
   const [winners, setWinners] = useState([]);
-
-  const [selected, setSelected] = useState("Entries");
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -25,6 +21,27 @@ function App() {
   const [player, setPlayer] = useState();
 
   const [urlInput, setUrlInput] = useState();
+
+  if (window.localStorage.getItem("duration") === null)
+    localStorage.setItem("duration", 10);
+
+  if (window.localStorage.getItem("wheelColor") === null)
+    localStorage.setItem("wheelColor", "#d38c12");
+
+  if (window.localStorage.getItem("fontColor") === null)
+    localStorage.setItem("fontColor", "#FFFFFF");
+
+  const [duration, setDuration] = useState(
+    window.localStorage.getItem("duration")
+  );
+
+  const [wheelColor, setWheelColor] = useState(
+    window.localStorage.getItem("wheelColor")
+  );
+
+  const [fontColor, setFontColor] = useState(
+    window.localStorage.getItem("fontColor")
+  );
 
   const [items, setItems] = useState(() => {
     const value = window.localStorage.getItem("itemsList");
@@ -40,48 +57,6 @@ function App() {
           "Gabriel",
           "Hanna",
         ];
-  });
-
-  const [marks, setMarks] = useState([
-    {
-      value: 10,
-      label: "10",
-    },
-    {
-      value: 20,
-      label: "20",
-    },
-    {
-      value: 30,
-      label: "30",
-    },
-    {
-      value: 40,
-      label: "40",
-    },
-    {
-      value: 50,
-      label: "50",
-    },
-    {
-      value: 60,
-      label: "60",
-    },
-  ]);
-
-  const [duration, setDuration] = useState(() => {
-    const value = window.localStorage.getItem("duration");
-    return value !== null ? value : 10;
-  });
-
-  const [wheelColor, setWheelColor] = useState(() => {
-    const value = window.localStorage.getItem("wheelColor");
-    return value !== null ? `${value}` : "#d38c12";
-  });
-
-  const [fontColor, setFontColor] = useState(() => {
-    const value = window.localStorage.getItem("fontColor");
-    return value !== null ? `${value}` : "#FFFFF";
   });
 
   const [url, setUrl] = useState(() => {
@@ -143,28 +118,24 @@ function App() {
       // set this state to disable tab and wheel click when spinning
       setSpinning(true);
 
-      // Disable function of Entries tab
-      if (selected === "Entries") {
-        // when spinning disable update player
-        document.getElementById("inputTextArea").disabled = true;
-        document.getElementById("updateButton").disabled = true;
+      // when spinning disable update player
+      document.getElementById("inputTextArea").disabled = true;
+      document.getElementById("updateButton").disabled = true;
+      document.getElementById("inputSearchBar").disabled = true;
+      document.getElementById("shuffleButton").disabled = true;
+      document.getElementById("removeButton").disabled = true;
+      document.getElementById("clearListButton").disabled = true;
 
-        // after done spinning enable update player
-        setTimeout(() => {
-          setSpinning(false);
-          document.getElementById("inputTextArea").disabled = false;
-          document.getElementById("updateButton").disabled = false;
-        }, window.localStorage.getItem("duration") * 1000);
-      } else {
-        // Disable function of Result tab
-        // when spinning disable clear list
-        document.getElementById("clearListButton").disabled = true;
-
-        setTimeout(() => {
-          setSpinning(false);
-          document.getElementById("clearListButton").disabled = false;
-        }, window.localStorage.getItem("duration") * 1000);
-      }
+      // after done spinning enable update player
+      setTimeout(() => {
+        setSpinning(false);
+        document.getElementById("inputTextArea").disabled = false;
+        document.getElementById("updateButton").disabled = false;
+        document.getElementById("inputSearchBar").disabled = false;
+        document.getElementById("shuffleButton").disabled = false;
+        document.getElementById("removeButton").disabled = false;
+        document.getElementById("clearListButton").disabled = false;
+      }, window.localStorage.getItem("duration") * 1000);
 
       setTimeout(() => {
         setWinners(winners.concat(items[selectedIndex]));
@@ -175,16 +146,6 @@ function App() {
       }, window.localStorage.getItem("duration") * 1000);
     }
   }
-
-  // set spin duration to local storage, when custom duration will update local storage
-  if (window.localStorage.getItem("duration") === null)
-    localStorage.setItem("duration", 10);
-
-  if (window.localStorage.getItem("wheelColor") === null)
-    localStorage.setItem("wheelColor", "#d38c12");
-
-  if (window.localStorage.getItem("fontColor") === null)
-    localStorage.setItem("fontColor", "#FFFFFF");
 
   let newWinnerIndex = winners.length - 1;
 
@@ -220,11 +181,7 @@ function App() {
           </Col>
           <Col lg="3" md="auto">
             <div id="Tabs" className="mt-4">
-              <Tabs
-                defaultActiveKey="entries"
-                id="uncontrolled-tab-example"
-                className="mb-3"
-              >
+              <Tabs defaultActiveKey="entries" className="mb-3">
                 <Tab eventKey="entries" title="Entries">
                   <ItemForm
                     items={items}
@@ -300,14 +257,8 @@ function App() {
                           type="button"
                           id="button-addon2"
                           onClick={() => {
-                            localStorage.setItem(
-                              "urlYoutube",
-                              urlInput.value
-                            );
+                            localStorage.setItem("urlYoutube", urlInput.value);
                             setUrl(window.localStorage.getItem("urlYoutube"));
-                            // this.setState({
-                            //   url: `${localStorage.getItem("urlYoutube")}`,
-                            // });
                           }}
                         >
                           Load
