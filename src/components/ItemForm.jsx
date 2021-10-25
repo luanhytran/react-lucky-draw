@@ -34,7 +34,7 @@ function ItemForm(props) {
   }
 
   function RemoveDuplicate() {
-    let uniqueItems = [...new Set(value)];
+    let uniqueItems = [...new Set(value.map((s) => s.trim()))];
     setValue(Array.from(uniqueItems));
   }
 
@@ -83,7 +83,7 @@ function ItemForm(props) {
           marginTop: "10px",
           padding: "10px",
         }}
-        value={value === null ? null : value.join("\n")}
+        value={value?.join("\n")}
         onChange={handleChange}
         rows={15}
         cols={15}

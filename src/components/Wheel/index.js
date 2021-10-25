@@ -47,7 +47,7 @@ export default class Wheel extends React.Component {
     cssProperties["--neutral-color"] = `${this.props.fontColor}`;
 
     if (cssProperties["--wheel-color"] === "null")
-      cssProperties["--wheel-color"] = "#da3768";
+      cssProperties["--wheel-color"] = "#d38c12";
 
     if (cssProperties["--neutral-color"] === "null")
       cssProperties["--neutral-color"] = "#FFFFFF";

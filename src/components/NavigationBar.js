@@ -1,9 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import Customize from "./Customize";
+import Customize from "./Customize/Customize";
 import { Button, Modal, Navbar, Nav } from "react-bootstrap";
 
-function MyNavBar(props) {
+function NavigationBar(props) {
   const [openModal, setOpenModal] = useState(false);
 
   function cancelModal() {
@@ -42,4 +42,4 @@ function MyNavBar(props) {
   );
 }
 
-export default MyNavBar;
+export default NavigationBar;

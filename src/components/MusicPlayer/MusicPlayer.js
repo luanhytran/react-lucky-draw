@@ -16,7 +16,7 @@ const MusicPlayer = (props) => {
     <div>
       <ReactAudioPlayer src={audioSrc} controls />
       <Dropdown onSelect={setTrackIndex}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
+        <Dropdown.Toggle variant="primary" id="dropdown-basic">
           {title}
         </Dropdown.Toggle>
 

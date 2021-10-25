@@ -1,20 +1,10 @@
 import React from "react";
 import ReactPlayer from "react-player";
 import Wheel from "./components/Wheel";
-import UserList from "./components/UserList";
+import ItemForm from "./components/ItemForm";
 import Result from "./components/Wheel/Result";
-import MyNavBar from "./components/MyNavBar";
-import {
-  Button,
-  Modal,
-  Container,
-  Row,
-  Col,
-  Tabs,
-  Tab,
-  InputGroup,
-  FormControl,
-} from "react-bootstrap";
+import NavigationBar from "./components/NavigationBar";
+import { Button, Modal, Container, Row, Col, Tabs, Tab } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css";
@@ -25,16 +15,22 @@ export class App extends React.Component {
     super(props);
 
     this.state = {
-      items: [
-        "Ali",
-        "Beatriz",
-        "Charles",
-        "Diya",
-        "Eric",
-        "Fatima",
-        "Gabriel",
-        "Hanna",
-      ],
+      items:
+        JSON.parse(localStorage.getItem("itemsList")) == null
+          ? localStorage.setItem(
+              "itemsList",
+              JSON.stringify([
+                "Ali",
+                "Beatriz",
+                "Charles",
+                "Diya",
+                "Eric",
+                "Fatima",
+                "Gabriel",
+                "Hanna",
+              ])
+            )
+          : JSON.parse(localStorage.getItem("itemsList")),
       spinning: false,
       text: "",
       winners: [],
@@ -69,10 +65,11 @@ export class App extends React.Component {
         },
       ],
       url:
-        localStorage.getItem("urlYoutube") === null
+        localStorage.getItem("urlYoutube") == null
           ? localStorage.setItem(
               "urlYoutube",
-              "https://youtu.be/40vHCH6l2lM"
+
+              "https://www.youtube.com/watch?v=40vHCH6l2lM"
             )
           : localStorage.getItem("urlYoutube"),
       controls: true,
@@ -83,8 +80,6 @@ export class App extends React.Component {
   load = (url) => {
     this.setState({
       url,
-      loaded: 0,
-      pip: false,
     });
   };
 
@@ -119,10 +114,6 @@ export class App extends React.Component {
     );
 
     localStorage.setItem("itemsList", JSON.stringify(this.state.items));
-  };
-
-  setSelected = (tab) => {
-    if (this.state.spinning !== true) this.setState({ selected: tab });
   };
 
   addData = (val) => {
@@ -181,26 +172,23 @@ export class App extends React.Component {
   };
 
   render() {
-    const { url, playing, controls, light, volume, muted, loop } = this.state;
+    const { url, playing, controls, loop } = this.state;
     // set spin duration to local storage, when custom duration will update local storage
     if (localStorage.getItem("duration") === null)
       localStorage.setItem("duration", 10);
 
     if (localStorage.getItem("wheelColor") === null)
-      localStorage.setItem("wheelColor", "#da3768");
+      localStorage.setItem("wheelColor", "#d38c12");
 
     if (localStorage.getItem("fontColor") === null)
       localStorage.setItem("fontColor", "#FFFFFF");
-
-    if (localStorage.getItem("urlYoutube" === null))
-      localStorage.setItem("urlYoutube", "https://youtu.be/40vHCH6l2lM");
 
     let newWinnerIndex = this.state.winners.length - 1;
 
     return (
       <div>
-        <MyNavBar onChange={this.changeWheelAndFontColor} />
-        <Modal show={this.state.openModal} onHide={this.cancelModal}>
+        <NavigationBar onChange={this.changeWheelAndFontColor} />
+        <Modal show={this.state.openModal} onHide={this.cancelModal} size="lg">
           <Modal.Header closeButton>
             <Modal.Title>We have a winner 🎉</Modal.Title>
           </Modal.Header>
@@ -235,7 +223,7 @@ export class App extends React.Component {
                   className="mb-3"
                 >
                   <Tab eventKey="entries" title="Entries">
-                    <UserList
+                    <ItemForm
                       items={this.state.items}
                       winners={this.state.winners}
                       onDeleteByIndex={this.onDeleteByIndex}
@@ -271,10 +259,10 @@ export class App extends React.Component {
                   url={url}
                   playing={playing}
                   controls={controls}
-                  light={light}
+                  light={false}
                   loop={loop}
-                  volume={volume}
-                  muted={muted}
+                  volume={null}
+                  muted={false}
                   onReady={() => console.log("onReady")}
                   onStart={() => console.log("onStart")}
                   onPlay={this.handlePlay}
@@ -306,7 +294,7 @@ export class App extends React.Component {
                     <tr>
                       <th>Video URL</th>
                       <td>
-                        <InputGroup className="">
+                        {/* <InputGroup className="">
                           <FormControl
                             placeholder="Enter URL"
                             ref={(input) => {
@@ -329,7 +317,33 @@ export class App extends React.Component {
                           >
                             Load
                           </Button>
-                        </InputGroup>
+                        </InputGroup> */}
+                        <div class="input-group mb-3">
+                          <input
+                            ref={(input) => {
+                              this.urlInput = input;
+                            }}
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter URL"
+                          />
+                          <Button
+                            class="btn btn-outline-secondary"
+                            type="button"
+                            id="button-addon2"
+                            onClick={() => {
+                              localStorage.setItem(
+                                "urlYoutube",
+                                this.urlInput.value
+                              );
+                              this.setState({
+                                url: `${localStorage.getItem("urlYoutube")}`,
+                              });
+                            }}
+                          >
+                            Load
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
