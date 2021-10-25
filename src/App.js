@@ -15,22 +15,32 @@ export class App extends React.Component {
     super(props);
 
     this.state = {
-      items:
-        JSON.parse(localStorage.getItem("itemsList")) == null
-          ? localStorage.setItem(
-              "itemsList",
-              JSON.stringify([
-                "Ali",
-                "Beatriz",
-                "Charles",
-                "Diya",
-                "Eric",
-                "Fatima",
-                "Gabriel",
-                "Hanna",
-              ])
-            )
-          : JSON.parse(localStorage.getItem("itemsList")),
+      // items:
+      //   JSON.parse(localStorage.getItem("itemsList")) == null
+      //     ? localStorage.setItem(
+      //         "itemsList",
+      //         JSON.stringify([
+      //           "Ali",
+      //           "Beatriz",
+      //           "Charles",
+      //           "Diya",
+      //           "Eric",
+      //           "Fatima",
+      //           "Gabriel",
+      //           "Hanna",
+      //         ])
+      //       )
+      //     : JSON.parse(localStorage.getItem("itemsList")),
+      items: [
+        "Ali",
+        "Beatriz",
+        "Charles",
+        "Diya",
+        "Eric",
+        "Fatima",
+        "Gabriel",
+        "Hanna",
+      ],
       spinning: false,
       text: "",
       winners: [],
@@ -64,14 +74,15 @@ export class App extends React.Component {
           label: "60",
         },
       ],
-      url:
-        localStorage.getItem("urlYoutube") == null
-          ? localStorage.setItem(
-              "urlYoutube",
+      // url:
+      //   localStorage.getItem("urlYoutube") == null
+      //     ? localStorage.setItem(
+      //         "urlYoutube",
 
-              "https://www.youtube.com/watch?v=40vHCH6l2lM"
-            )
-          : localStorage.getItem("urlYoutube"),
+      //         "https://www.youtube.com/watch?v=40vHCH6l2lM"
+      //       )
+      //     : localStorage.getItem("urlYoutube"),
+      url: "https://www.youtube.com/watch?v=40vHCH6l2lM",
       controls: true,
       loop: true,
     };
