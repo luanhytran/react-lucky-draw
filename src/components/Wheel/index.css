@@ -1,0 +1,322 @@
+@media only screen and (max-width: 400px) {
+  :root {
+    --wheel-font: "Lato", "Quicksand", sans-serif;
+    --wheel-size: 280px;
+    --wheel-slice-spacing: 25px;
+    --wheel-border-size: 5px;
+    --wheel-color: #da3768;
+    --neutral-color: white;
+    --PI: 3.14159265358979;
+    --nb-item: 0;
+    --item-nb: 0;
+    --selected-item: 0;
+    --nb-turn: 5;
+    --spinning-duration: 10s;
+    --reset-duration: 0.25s;
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 450px) {
+  :root {
+    --wheel-font: "Lato", "Quicksand", sans-serif;
+    --wheel-size: 350px;
+    --wheel-slice-spacing: 25px;
+    --wheel-border-size: 5px;
+    --wheel-color: #da3768;
+    --neutral-color: white;
+    --PI: 3.14159265358979;
+    --nb-item: 0;
+    --item-nb: 0;
+    --selected-item: 0;
+    --nb-turn: 5;
+    --spinning-duration: 10s;
+    --reset-duration: 0.25s;
+  }
+}
+
+@media only screen and (min-width: 450px) and (max-width: 550px) {
+  :root {
+    --wheel-font: "Lato", "Quicksand", sans-serif;
+    --wheel-size: 400px;
+    --wheel-slice-spacing: 30px;
+    --wheel-border-size: 5px;
+    --wheel-color: #da3768;
+    --neutral-color: white;
+    --PI: 3.14159265358979;
+    --nb-item: 0;
+    --item-nb: 0;
+    --selected-item: 0;
+    --nb-turn: 5;
+    --spinning-duration: 10s;
+    --reset-duration: 0.25s;
+  }
+}
+
+@media only screen and (min-width: 550px) and (max-width: 600px) {
+  :root {
+    --wheel-font: "Lato", "Quicksand", sans-serif;
+    --wheel-size: 450px;
+    --wheel-slice-spacing: 30px;
+    --wheel-border-size: 5px;
+    --wheel-color: #da3768;
+    --neutral-color: white;
+    --PI: 3.14159265358979;
+    --nb-item: 0;
+    --item-nb: 0;
+    --selected-item: 0;
+    --nb-turn: 5;
+    --spinning-duration: 10s;
+    --reset-duration: 0.25s;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 700px) {
+  :root {
+    --wheel-font: "Lato", "Quicksand", sans-serif;
+    --wheel-size: 500px;
+    --wheel-slice-spacing: 35px;
+    --wheel-border-size: 5px;
+    --wheel-color: #da3768;
+    --neutral-color: white;
+    --PI: 3.14159265358979;
+    --nb-item: 0;
+    --item-nb: 0;
+    --selected-item: 0;
+    --nb-turn: 5;
+    --spinning-duration: 10s;
+    --reset-duration: 0.25s;
+  }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 800px) {
+  :root {
+    --wheel-font: "Lato", "Quicksand", sans-serif;
+    --wheel-size: 500px;
+    --wheel-slice-spacing: 35px;
+    --wheel-border-size: 5px;
+    --wheel-color: #da3768;
+    --neutral-color: white;
+    --PI: 3.14159265358979;
+    --nb-item: 0;
+    --item-nb: 0;
+    --selected-item: 0;
+    --nb-turn: 5;
+    --spinning-duration: 10s;
+    --reset-duration: 0.25s;
+  }
+
+  div.row {
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 991px) {
+  :root {
+    --wheel-font: "Lato", "Quicksand", sans-serif;
+    --wheel-size: 530px;
+    --wheel-slice-spacing: 50px;
+    --wheel-border-size: 5px;
+    --wheel-color: #da3768;
+    --neutral-color: white;
+    --PI: 3.14159265358979;
+    --nb-item: 0;
+    --item-nb: 0;
+    --selected-item: 0;
+    --nb-turn: 5;
+    --spinning-duration: 10s;
+    --reset-duration: 0.25s;
+  }
+  div.row {
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 991px) and (max-width: 1165px) {
+  :root {
+    --wheel-font: "Lato", "Quicksand", sans-serif;
+    --wheel-size: 430px;
+    --wheel-slice-spacing: 50px;
+    --wheel-border-size: 5px;
+    --wheel-color: #da3768;
+    --neutral-color: white;
+    --PI: 3.14159265358979;
+    --nb-item: 0;
+    --item-nb: 0;
+    --selected-item: 0;
+    --nb-turn: 5;
+    --spinning-duration: 10s;
+    --reset-duration: 0.25s;
+  }
+}
+
+@media only screen and (min-width: 1165px) and (max-width: 1425px) {
+  :root {
+    --wheel-font: "Lato", "Quicksand", sans-serif;
+    --wheel-size: 530px;
+    --wheel-slice-spacing: 50px;
+    --wheel-border-size: 5px;
+    --wheel-color: #da3768;
+    --neutral-color: white;
+    --PI: 3.14159265358979;
+    --nb-item: 0;
+    --item-nb: 0;
+    --selected-item: 0;
+    --nb-turn: 5;
+    --spinning-duration: 10s;
+    --reset-duration: 0.25s;
+  }
+}
+
+@media only screen and (min-width: 1425px) {
+  :root {
+    --wheel-font: "Lato", "Quicksand", sans-serif;
+    --wheel-size: 630px;
+    --wheel-slice-spacing: 50px;
+    --wheel-border-size: 5px;
+    --wheel-color: #da3768;
+    --neutral-color: white;
+    --PI: 3.14159265358979;
+    --nb-item: 0;
+    --item-nb: 0;
+    --selected-item: 0;
+    --nb-turn: 5;
+    --spinning-duration: 10s;
+    --reset-duration: 0.25s;
+  }
+}
+
+/* Conteneur de la roue = cercle rose extérieur */
+.wheel-container {
+  display: block;
+  position: relative;
+  box-sizing: content-box;
+  width: calc(var(--wheel-size) + 2 * var(--wheel-border-size));
+  height: calc(var(--wheel-size) + 2 * var(--wheel-border-size));
+  padding: 3px;
+  margin: auto;
+  background-color: var(--neutral-color);
+  border: solid var(--wheel-color) 3px;
+  border-radius: 50%;
+  user-select: none;
+}
+
+/* Triangle de sélection = 1 rose +  1 blanc */
+.wheel-container::before,
+.wheel-container::after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 0;
+  width: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border: solid transparent 20px;
+  border-left-width: 0;
+}
+
+.wheel-container::before {
+  right: 0px;
+  border-right-color: var(--wheel-color);
+}
+
+.wheel-container::after {
+  right: -5px;
+  border-right-color: var(--neutral-color);
+}
+
+/* Roue */
+.wheel {
+  display: block;
+  position: relative;
+  box-sizing: content-box;
+  margin: auto;
+  width: var(--wheel-size);
+  height: var(--wheel-size);
+  overflow: hidden;
+  border-radius: 50%;
+  border: solid var(--wheel-color) var(--wheel-border-size);
+  background-color: var(--wheel-color);
+  transition: transform var(--reset-duration);
+  transform: rotate(0deg);
+  cursor: pointer;
+}
+
+.wheel.spinning {
+  transition: transform var(--spinning-duration);
+  transform: rotate(
+    calc(
+      var(--nb-turn) * 360deg +
+        (-360deg * var(--selected-item) / var(--nb-item, 1))
+    )
+  );
+}
+
+/* Centre de la roue = rond blanc au centre */
+.wheel::after {
+  display: block;
+  position: absolute;
+  content: "";
+  background-color: var(--neutral-color);
+  width: 25px;
+  height: 25px;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+/* Element sur la roue */
+.wheel-item {
+  display: block;
+  position: absolute;
+  box-sizing: border-box;
+
+  /* position de l'item */
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  transform-origin: center left;
+  transform: translateY(-50%)
+    rotate(calc(var(--item-nb) * (360deg / var(--nb-item, 1))));
+
+  /* texte */
+  color: var(--neutral-color);
+  text-align: right;
+  padding: 0 25px 0 50px;
+  font-family: var(--wheel-font);
+}
+
+/* Background de l'élément = triangle rose plus clair */
+.wheel-item:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  box-sizing: border-box;
+  z-index: -1;
+  width: 0;
+  height: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-left: 0px;
+  opacity: 0.25;
+
+  /* 
+    Largeur du triangle
+    Je ne sais pas pourquoi j'ai besoin d'ajouter 
+      " + var(--wheel-size) / 2 " dans slice-max-width  ==> donne 2.PI.R + R
+    mais globalement ca marche a peu près bien 
+    TODO: A étudier 
+  */
+  --slice-max-width: calc(
+    var(--PI) * var(--wheel-size) + var(--wheel-size) / 2
+  );
+  --slice-width: calc(
+    (var(--slice-max-width) / var(--nb-item)) - var(--wheel-slice-spacing)
+  );
+  border: solid transparent calc(var(--slice-width) / 2);
+  border-left: solid transparent 0;
+  /* profondeur du triangle = du centre de la roue à la bordure = 300px / 2 */
+  border-right: solid var(--neutral-color) calc(var(--wheel-size) / 2);
+}
