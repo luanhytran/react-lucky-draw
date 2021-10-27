@@ -1,5 +1,5 @@
 {
-  "name": "wheel-of-names",
+  "name": "lucky-draw",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -30,6 +30,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "author": "luanhy",
   "eslintConfig": {
     "extends": [
       "react-app",

@@ -15,11 +15,10 @@ const MusicPlayer = (props) => {
   return (
     <div>
       <ReactAudioPlayer src={audioSrc} controls />
-      <Dropdown onSelect={setTrackIndex}>
+      <Dropdown className="mt-0" onSelect={setTrackIndex}>
         <Dropdown.Toggle variant="primary" id="dropdown-basic">
           {title}
         </Dropdown.Toggle>
-
         <Dropdown.Menu>
           <Dropdown.Item eventKey="0" onClick={changeSound}>
             Tiếng vỗ tay

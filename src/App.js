@@ -1,8 +1,8 @@
 import { React, useState } from "react";
 import ReactPlayer from "react-player";
 import Wheel from "./components/Wheel";
-import ItemForm from "./components/ItemForm";
-import Result from "./components/Wheel/Result";
+import ItemForm from "./components/Tab/ItemForm/ItemForm";
+import Result from "./components/Tab/Result";
 import NavigationBar from "./components/NavigationBar";
 import { Button, Modal, Container, Row, Col, Tabs, Tab } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -61,9 +61,7 @@ function App() {
 
   const [url, setUrl] = useState(() => {
     const value = window.localStorage.getItem("urlYoutube");
-    return value !== null
-      ? `${value}`
-      : "https://www.youtube.com/watch?v=40vHCH6l2lM";
+    return value !== null ? `${value}` : null;
   });
 
   const [controls, setControls] = useState(true);
@@ -159,7 +157,7 @@ function App() {
         <Modal.Body>
           <p>{winners[newWinnerIndex]}</p>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
           <Button variant="secondary" onClick={cancelModal}>
             Cancel
           </Button>
@@ -225,59 +223,45 @@ function App() {
                 onSeek={(e) => console.log("onSeek", e)}
                 onError={(e) => console.log("onError", e)}
               />
-              <table style={{ width: "100%", marginTop: "10px" }}>
-                <tbody>
-                  <tr>
-                    <th>
-                      <label htmlFor="loop">Loop</label>
-                    </th>
-                    <td>
-                      <input
-                        id="loop"
-                        type="checkbox"
-                        checked={loop}
-                        onChange={handleToggleLoop}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Video URL</th>
-                    <td>
-                      <div class="input-group mb-3">
-                        <input
-                          ref={(input) => {
-                            setUrlInput(input);
-                          }}
-                          type="text"
-                          class="form-control"
-                          placeholder="Enter URL"
-                        />
-                        <Button
-                          class="btn btn-outline-secondary"
-                          type="button"
-                          id="button-addon2"
-                          onClick={() => {
-                            localStorage.setItem("urlYoutube", urlInput.value);
-                            setUrl(window.localStorage.getItem("urlYoutube"));
-                          }}
-                        >
-                          Load
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <table style={{ marginTop: "10px" }}>
-                <tbody>
-                  <h2>Music player</h2>
-                  <tr>
-                    <td>
-                      <MusicPlayer />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+
+              <form className="form-inline mt-3">
+                <div class="input-group mb-3">
+                  <input
+                    ref={(input) => {
+                      setUrlInput(input);
+                    }}
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter URL"
+                  />
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    id="button-addon2"
+                    onClick={() => {
+                      localStorage.setItem("urlYoutube", urlInput.value);
+                      setUrl(window.localStorage.getItem("urlYoutube"));
+                    }}
+                  >
+                    Load
+                  </button>
+                </div>
+                <form className="form-inline w-100 mt-2 mb-3 form-check">
+                  {" "}
+                  <label className="form-check-label">Loop</label>
+                  <input
+                    id="loop"
+                    checked={loop}
+                    onChange={handleToggleLoop}
+                    type="checkbox"
+                    className="form-check-input"
+                  />
+                </form>
+              </form>
+              <form className="form-inline mt-10">
+                <h2>Music player</h2>
+                <MusicPlayer />
+              </form>
             </section>
           </Col>
         </Row>
