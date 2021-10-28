@@ -1,6 +1,6 @@
 {
   "name": "lucky-draw",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.4.1",
@@ -31,6 +31,8 @@
     "eject": "react-scripts eject"
   },
   "author": "luanhy",
+  "description": "A random name picker app.",
+  "license": "MIT",
   "eslintConfig": {
     "extends": [
       "react-app",
